@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <errno.h>
 
 #define MAX_LINE 1024  // Tamaño máximo de la línea de comando
 #define MAX_ARGS 64    // Número máximo de argumentos
