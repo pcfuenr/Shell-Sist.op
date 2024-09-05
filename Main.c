@@ -65,6 +65,7 @@ int main() {
 
         // Ejecutar el comando
         if(strcmp(cmd,"cd") == 0) {
+            cd(args);
         }
         else{
             executeCommand(args);
