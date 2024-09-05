@@ -11,7 +11,7 @@
 
 void cd(char *ruta){
     if (ruta == NULL) {
-        fprintf(stderr, "Error: No se proporcionó directorio\n");
+        chdir();
     } else {
         if (chdir(ruta) != 0) {
             perror("Error al cambiar de directorio");
