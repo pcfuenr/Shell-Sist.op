@@ -10,10 +10,10 @@
 #define MAX_ARGS 64    // Número máximo de argumentos
 
 void cd(char *ruta){
-    if (path == NULL) {
+    if (ruta == NULL) {
         fprintf(stderr, "Error: No se proporcionó directorio\n");
     } else {
-        if (chdir(path) != 0) {
+        if (chdir(ruta) != 0) {
             perror("Error al cambiar de directorio");
         }
     }
