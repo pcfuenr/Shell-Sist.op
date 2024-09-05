@@ -8,6 +8,16 @@
 #define MAX_LINE 1024  // Tamaño máximo de la línea de comando
 #define MAX_ARGS 64    // Número máximo de argumentos
 
+void cd(char *ruta){
+    if (path == NULL) {
+        fprintf(stderr, "Error: No se proporcionó directorio\n");
+    } else {
+        if (chdir(path) != 0) {
+            perror("Error al cambiar de directorio");
+        }
+    }
+}
+
 void parseCommand(char *cmd, char **args) {
     for (int i = 0; i < MAX_ARGS; i++) {
         args[i] = strsep(&cmd, " ");
@@ -45,7 +55,7 @@ int main() {
 
         // Si la línea está vacía, continuar
         if (strlen(cmd) == 0) continue;
-
+        
         // Comprobar si el comando es "exit"
         if (strcmp(cmd, "exit") == 0) break;
 
@@ -53,8 +63,12 @@ int main() {
         parseCommand(cmd, args);
 
         // Ejecutar el comando
-        executeCommand(args);
+        if(strcmp(cmd,"cd") == 0) {
+        }
+        else{
+            executeCommand(args);
+        }
+        
     }
-
     return 0;
 }
