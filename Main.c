@@ -61,7 +61,7 @@ int main() {
     DirectorioAnterior[0] = '\0';
     while (1) {
         printf("mishell:$ ");
-        fgets(cmd, MAX_LINE, stdin);
+        fgets(cmd, Max_Caracteres, stdin);
 
         // Eliminar el salto de línea al final de la entrada
         cmd[strcspn(cmd, "\n")] = 0;
