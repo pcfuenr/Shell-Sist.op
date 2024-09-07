@@ -9,7 +9,6 @@
 #define Max_Caracteres 1024  // Tamaño máximo de la línea de comando
 #define Max_Argumentos 64    // Número máximo de argumentos
 #define Max_pipes 10         // Número maximo de argumentos concatenados con pipes
-#define Max_Directorios 100  // Número de directorios guardados
 
 char DirectorioAnterior[Max_Caracteres];
 
@@ -29,11 +28,11 @@ void cd(char *ruta){
             perror("Error al cambiar de directorio");
         }
     }
-    strcpy(DirectorioAnterior,DirectorioActual)
+    strcpy(DirectorioAnterior,DirectorioActual);
 }
 
 void parseCommand(char *cmd, char **args) {
-    for (int i = 0; i < MAX_ARGS; i++) {
+    for (int i = 0; i < Max_Argumentos; i++) {
         args[i] = strsep(&cmd, " ");
         if (args[i] == NULL) break;
     }
@@ -57,8 +56,8 @@ void executeCommand(char **args) {
 }
 
 int main() {
-    char cmd[MAX_LINE];
-    char *args[MAX_ARGS];
+    char cmd[Max_Caracteres];
+    char *args[Max_Argumentos];
     DirectorioAnterior[0] = '\0';
     while (1) {
         printf("mishell:$ ");
