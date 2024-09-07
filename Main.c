@@ -58,9 +58,11 @@ void executeCommand(char **args) {
 int main() {
     char cmd[Max_Caracteres];
     char *args[Max_Argumentos];
-    DirectorioAnterior[0] = '\0';
+
     while (1) {
-        printf("mishell:$ ");
+        char DirectorioActual[Max_Caracteres];
+        getcwd(DirectorioActual, sizeof(DirectorioActual));
+        printf("mishell:\%s$ ",DirectorioActual);
         fgets(cmd, Max_Caracteres, stdin);
 
         // Eliminar el salto de línea al final de la entrada
