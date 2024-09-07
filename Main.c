@@ -6,17 +6,30 @@
 #include <sys/wait.h>
 #include <errno.h>
 
-#define MAX_LINE 1024  // Tamaño máximo de la línea de comando
-#define MAX_ARGS 64    // Número máximo de argumentos
+#define Max_Caracteres 1024  // Tamaño máximo de la línea de comando
+#define Max_Argumentos 64    // Número máximo de argumentos
+#define Max_pipes 10         // Número maximo de argumentos concatenados con pipes
+#define Max_Directorios 100  // Número de directorios guardados
+
+char DirectorioAnterior[Max_Caracteres];
 
 void cd(char *ruta){
+    char DirectorioActual[Max_Caracteres];
+
+    getcwd(DirectorioActual, sizeof(DirectorioActual));
+
     if (ruta == NULL) {
-        chdir();
+        if(strlen(DirectorioAnterior)>0){
+            if(chdir(DirectorioAnterior)!=0){
+                perror("Error al cambiar al directorio anterior");
+            }
+        }
     } else {
         if (chdir(ruta) != 0) {
             perror("Error al cambiar de directorio");
         }
     }
+    strcpy(DirectorioAnterior,DirectorioActual)
 }
 
 void parseCommand(char *cmd, char **args) {
@@ -46,7 +59,7 @@ void executeCommand(char **args) {
 int main() {
     char cmd[MAX_LINE];
     char *args[MAX_ARGS];
-    
+    DirectorioAnterior[0] = '\0';
     while (1) {
         printf("mishell:$ ");
         fgets(cmd, MAX_LINE, stdin);
