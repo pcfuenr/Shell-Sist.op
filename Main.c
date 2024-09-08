@@ -46,7 +46,7 @@ void favsCmd(char **args) {
             printf("favejecutar\n");
         }
         else{
-            return("Error: Número favorito fuera de rango o no valido");
+            printf("Error: Número favorito fuera de rango o no valido");
         }
     } else if (strcmp(args[1], "cargar") == 0) {
 
