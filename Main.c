@@ -17,6 +17,23 @@ char *favoritos[MAX_FAV];
 
 FILE *fp;
 
+void executeCommand(char **args) {
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        perror("Error en fork");
+    } else if (pid == 0) {
+        // Proceso hijo
+        if (execvp(args[0], args) < 0) {
+            perror("Error en exec");
+        }
+        exit(EXIT_FAILURE);
+    } else {
+        // Proceso padre
+        waitpid(pid,NULL,0);
+    }
+}
+
 void favsCmd(char **args) {
     if (strcmp(args[1], "crear") == 0) {
         fp = fopen(args[2], "w+");
@@ -145,22 +162,7 @@ void parseCommand(char *cmd, char **args) {
     }
 }
 
-void executeCommand(char **args) {
-    pid_t pid = fork();
 
-    if (pid < 0) {
-        perror("Error en fork");
-    } else if (pid == 0) {
-        // Proceso hijo
-        if (execvp(args[0], args) < 0) {
-            perror("Error en exec");
-        }
-        exit(EXIT_FAILURE);
-    } else {
-        // Proceso padre
-        waitpid(pid,NULL,0);
-    }
-}
 
 int main() {
     char cmd[Max_Caracteres];
