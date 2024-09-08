@@ -50,6 +50,10 @@ void recordatorio(char **action){
     int segundos = atoi(action[2]);
     char *mensaje = action[3];
 
+    if(segundos < 0){
+	printf("\n No se permiten segundos negativos\n");
+	return;
+    }
 
     // PROCESO
     pid_t parentId = getpid();
