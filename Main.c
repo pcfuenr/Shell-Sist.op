@@ -59,7 +59,8 @@ void favsCmd(char **args) {
 
         int num = atoi(args[1]);
         if(num > 0 && num <= MAX_FAV && favoritos[num - 1] != NULL){
-            executeCommand(favoritos[num - 1]);
+            char *Compatible[] = {favoritos[num - 1], NULL};
+            executeCommand(Compatible);
             printf("favejecutar\n");
         }
         else{
