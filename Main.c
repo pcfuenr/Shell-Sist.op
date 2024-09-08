@@ -31,6 +31,52 @@ void cd(char *ruta){
     strcpy(DirectorioAnterior,DirectorioActual);
 }
 
+void printSetComands(){
+    printf("\n  Comandos disponibles:\nset recordatorio segundos mensaje\n\n");
+} 
+
+void recordatorio(char **action){
+    if(action[2] == NULL || action[3] == NULL){
+	printSetComands();
+	return;
+    }
+
+    int segundos = atoi(action[2]);
+    char *mensaje = action[3];
+
+
+    // PROCESO
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        perror("Error en fork");
+    } else if (pid == 0) {
+        // Proceso hijo
+	char *args[]={"./RecordatorioProcess",action[2],action[3], NULL};
+        execvp(args[0],args);
+	perror("Fallo en crear recordatorio");
+	exit(-1);
+    } else {
+        // Proceso padre
+	printf("\nNuevo recordatorio: %s en %d segundos.\n\n",mensaje,segundos);
+	return;
+    }
+}
+
+void set(char **action){
+    if(action[1] == NULL){
+	printSetComands();
+	return;
+    }
+
+    if(strcmp(action[1],"recordatorio") == 0){
+	recordatorio(action);
+	return;
+    }
+    
+    printSetComands();
+}
+
 void parseCommand(char *cmd, char **args) {
     for (int i = 0; i < Max_Argumentos; i++) {
         args[i] = strsep(&cmd, " ");
@@ -81,6 +127,9 @@ int main() {
         if(strcmp(cmd,"cd") == 0) {
             cd(args[1]);
         }
+	else if(strcmp(cmd,"set") == 0) {
+	    set(args);
+	}
         else{
             executeCommand(args);
         }
