@@ -13,10 +13,10 @@
 #define MAX_FAV 1000
 
 char DirectorioAnterior[Max_Caracteres];
-char *favoritos[MAX_FAV]
+char *favoritos[MAX_FAV];
 int index=0;
 
-File *fp;
+FILE *fp;
 
 void favsCmd(char **args) {
     if (strcmp(args[1], "crear") == 0) {
