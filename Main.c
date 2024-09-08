@@ -97,7 +97,7 @@ void executeCommand(char **args) {
         exit(EXIT_FAILURE);
     } else {
         // Proceso padre
-        wait(NULL);
+        waitpid(pid,NULL,0);
     }
 }
 
