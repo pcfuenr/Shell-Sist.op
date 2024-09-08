@@ -14,7 +14,6 @@
 
 char DirectorioAnterior[Max_Caracteres];
 char *favoritos[MAX_FAV];
-int index=0;
 
 FILE *fp;
 
