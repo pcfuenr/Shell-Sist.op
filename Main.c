@@ -10,8 +10,54 @@
 #define Max_Caracteres 1024  // Tamaño máximo de la línea de comando
 #define Max_Argumentos 64    // Número máximo de argumentos
 #define Max_pipes 10         // Número maximo de argumentos concatenados con pipes
+#define MAX_FAV 1000
 
 char DirectorioAnterior[Max_Caracteres];
+char *favoritos[MAX_FAV]
+int index=0;
+
+File *fp;
+
+void favsCmd(char **args) {
+    if (strcmp(args[1], "crear") == 0) {
+        fp = fopen(args[2], "w+");
+        printf("favcrear\n");
+        
+    } else if (strcmp(args[1], "mostrar") == 0) {
+
+        printf("favmostrar\n");
+
+    } else if (strcmp(args[1], "eliminar") == 0) {
+
+        printf("faveliminar\n");
+
+    } else if (strcmp(args[1], "buscar") == 0) {
+
+        printf("favbuscar\n");
+
+    } else if (strcmp(args[1], "borrar") == 0) {
+
+        printf("favborrar\n");
+
+    } else if (strcmp(args[2], "ejecutar") == 0) {
+
+        int num = atoi(args[1]);
+        executeCommand(favoritos[num - 1]);
+        printf("favejecutar\n");
+
+    } else if (strcmp(args[1], "cargar") == 0) {
+
+        printf("favcargar\n");
+
+    } else if (strcmp(args[1], "guardar") == 0) {
+        fclose(fp);
+        fp = fopen(args[2], "w+");
+        printf("favguardar\n");
+
+    } else {
+        printf("Error, no se ha proporcionado un argumento valido para el comando 'favs'\n");
+    }
+}
 
 void cd(char *ruta){
     char DirectorioActual[Max_Caracteres];
@@ -139,9 +185,12 @@ int main() {
         if(strcmp(cmd,"cd") == 0) {
             cd(args[1]);
         }
-	else if(strcmp(cmd,"set") == 0) {
-	    set(args);
-	}
+        else if(strcmp(cmd,"set") == 0) {
+            set(args);
+        }
+        else if(strcmp(cmd,"favs") == 0){
+            favsCmd(args);
+        }
         else{
             executeCommand(args);
         }
