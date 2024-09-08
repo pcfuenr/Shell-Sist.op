@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <errno.h>
+#include <signal.h>
 
 #define Max_Caracteres 1024  // Tamaño máximo de la línea de comando
 #define Max_Argumentos 64    // Número máximo de argumentos
@@ -35,6 +36,11 @@ void printSetComands(){
     printf("\n  Comandos disponibles:\nset recordatorio segundos mensaje\n\n");
 } 
 
+void sig_usr(int signo){
+    if(signo == SIGINT)
+    printf("Signal caught!");
+    return;
+}
 void recordatorio(char **action){
     if(action[2] == NULL || action[3] == NULL){
 	printSetComands();
@@ -46,19 +52,21 @@ void recordatorio(char **action){
 
 
     // PROCESO
+    pid_t parentId = getpid();
     pid_t pid = fork();
 
     if (pid < 0) {
         perror("Error en fork");
     } else if (pid == 0) {
         // Proceso hijo
-	char *args[]={"./RecordatorioProcess",action[2],action[3], NULL};
-        execvp(args[0],args);
-	perror("Fallo en crear recordatorio");
-	exit(-1);
+	sleep(segundos);
+
+	printf("\n\n-------------------------\n\n  * RECUERDE: %s\n\n-------------------------\nENTER PARA CONTINUAR\n\n",mensaje);
+	exit(0);
+
     } else {
         // Proceso padre
-	printf("\nNuevo recordatorio: %s en %d segundos.\n\n",mensaje,segundos);
+	printf("\n| Nuevo recordatorio: %s en %d segundos. | \n",mensaje,segundos);
 	return;
     }
 }
