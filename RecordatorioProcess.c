@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 
     sleep(segundos);
 
-    printf("\n\nRECUERDA: %s\n\n",mensaje);
+    printf("\n-------------------------\n* RECUERDE: %s\n-------------------------\nPRESIONE ENTER O NUEVO COMANDO PARA CONTINUAR: ",mensaje);
 
     return 0;
 }
