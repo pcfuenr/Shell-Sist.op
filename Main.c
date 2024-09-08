@@ -10,7 +10,7 @@
 #define Max_Caracteres 1024  // Tamaño máximo de la línea de comando
 #define Max_Argumentos 64    // Número máximo de argumentos
 #define Max_pipes 10         // Número maximo de argumentos concatenados con pipes
-#define MAX_FAV 1000
+#define MAX_FAV 1000         // Número máximo de comandos guardados como favoritos
 
 char DirectorioAnterior[Max_Caracteres];
 char *favoritos[MAX_FAV];
@@ -38,12 +38,16 @@ void favsCmd(char **args) {
 
         printf("favborrar\n");
 
-    } else if (strcmp(args[2], "ejecutar") == 0) {
+    } else if (args[1] != NULL && args[2] != NULL && strcmp(args[2], "ejecutar") == 0) {
 
         int num = atoi(args[1]);
-        executeCommand(favoritos[num - 1]);
-        printf("favejecutar\n");
-
+        if(num > 0 && num <= MAX_FAV && favoritos[num - 1] != NULL){
+            executeCommand(favoritos[num - 1]);
+            printf("favejecutar\n");
+        }
+        else{
+            return("Error: Número favorito fuera de rango o no valido");
+        }
     } else if (strcmp(args[1], "cargar") == 0) {
 
         printf("favcargar\n");
